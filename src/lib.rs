@@ -42,12 +42,12 @@ pub struct System;
 unsafe impl Allocator for System {
     #[inline]
     fn allocate(&self, layout: Layout) -> Result<NonNull<[u8]>, AllocError> {
-        NonNull::new(GlobalAlloc::alloc(self, layout)).ok_or(AllocError)
+        NonNull::new([GlobalAlloc::alloc(self, layout)]).ok_or(AllocError)
     }
 
     #[inline]
     fn allocate_zeroed(&self, layout: Layout) -> Result<NonNull<[u8]>, AllocError> {
-        NonNull::new(GlobalAlloc::alloc_zeroed(self, layout)).ok_or(AllocError)
+        NonNull::new([GlobalAlloc::alloc_zeroed(self, layout)]).ok_or(AllocError)
     }
 
     #[inline]
