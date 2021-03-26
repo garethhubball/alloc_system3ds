@@ -41,17 +41,17 @@ pub struct System;
 
 unsafe impl Allocator for System {
     #[inline]
-    unsafe fn allocate(&mut self, layout: Layout) -> Result<NonNull<u8>, AllocError> {
+    fn allocate(&self, layout: Layout) -> Result<NonNull<u8>, AllocError> {
         NonNull::new(GlobalAlloc::alloc(self, layout)).ok_or(AllocError)
     }
 
     #[inline]
-    unsafe fn allocate_zeroed(&mut self, layout: Layout) -> Result<NonNull<u8>, AllocError> {
+    fn allocate_zeroed(&self, layout: Layout) -> Result<NonNull<u8>, AllocError> {
         NonNull::new(GlobalAlloc::alloc_zeroed(self, layout)).ok_or(AllocError)
     }
 
     #[inline]
-    unsafe fn deallocate(&mut self, ptr: NonNull<u8>, layout: Layout) {
+    fn deallocate(&self, ptr: NonNull<u8>, layout: Layout) {
         GlobalAlloc::dealloc(self, ptr.as_ptr(), layout)
     }
 
